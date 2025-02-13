@@ -1,0 +1,10 @@
+redblue mongodb:{
+	username	:	redandbluesk2002
+	password	:	vNm4pKQIohBadMkj
+	uri-db  	:	mongodb+srv://redandbluesk2002:vNm4pKQIohBadMkj@cluster0.pahyf.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0
+	uri-tamplate	:	mongodb+srv://redandbluesk2002:<db_password>@cluster0.pahyf.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0
+}
+GIT HUB : {
+	password	:	redandbluesk2002
+}
+
