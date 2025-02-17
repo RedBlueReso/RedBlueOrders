@@ -32,7 +32,8 @@
     "http": "^0.0.1-security",
     "mongoose": "^8.10.0",
     "nodemon": "^3.1.9",
-    "passport": "^0.7.0"
+    "passport": "^0.7.0",
+    "ws": "^8.18.0"
   },
   "type": "module"
 }
