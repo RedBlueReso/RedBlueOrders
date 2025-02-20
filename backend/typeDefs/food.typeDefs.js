@@ -11,10 +11,13 @@ const foodTypeDef = `#graphql
         mealTime : String
     }
     type Query {
-        getFood(id: ID!): Food
+        getFood(input: ID!): Food
+        getAllFood : [Food]
+        getBack(input : String!) : [String]
+        
     }
     type Mutation {
-        createFood(input : createFoodInput) : Food
+        createFood(input : createFoodInput!) : Food
         updateFood(input : updateFoodInput) : Food
         deleteFood(input : ID!) : Food
     }
@@ -22,21 +25,21 @@ const foodTypeDef = `#graphql
         name : String!
         price : Float!
         ingredients : [String!]!
-        size : String
-        type : String
+        size : [String]
+        type : [String]
         category : String
         image : String
-        mealTime : String
+        mealTime : [String]
     }
     input updateFoodInput {
         name : String
         price : Float
         ingredients : [String!]
-        size : String
-        type : String
+        size : [String]
+        type : [String]
         category : String
         image : String
-        mealTime : String
+        mealTime : [String]
     }
 
 `

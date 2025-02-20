@@ -23,8 +23,8 @@ const FoodSchema = mongoose.Schema({
     
     type : [{
         type : String,
-        default : 'meals',
-        enum : ['bakery','drinks','desserts','meals']
+        
+        
     }],
     category : {
         type : String,
