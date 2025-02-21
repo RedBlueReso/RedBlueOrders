@@ -3,6 +3,7 @@ import express from 'express'
 import cors from 'cors'
 import ConnectMongoDBSession from 'connect-mongodb-session';
 import expressSession from 'express-session';
+import path from 'path'
 import passport from 'passport';
 import { createServer } from 'http';
 import { configDotenv } from 'dotenv';
@@ -117,6 +118,15 @@ app.use(
         context : async({req , res}) => buildContext({req , res}),
     }),
 );
+
+// server production
+const __dirname = path.resolve();
+if(process.env.NODE_ENV = 'production'){
+    app.use(express.static(path.join(__dirname , 'frontend','dist')))
+    app.get('*', (req , res) => {
+    res.sendFile(path.join(__dirname , 'frontend','dist','index.html'))
+    })
+}
 
 // START SERVER
 const PORT = process.env.PORT;

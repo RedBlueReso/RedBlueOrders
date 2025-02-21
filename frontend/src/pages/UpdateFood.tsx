@@ -1,5 +1,5 @@
 import { useState } from "react";
-import {CREATE_FOOD} from '../graphql/mutation/food.mutation.js'
+import {UPDATE_FOOD} from '../graphql/mutation/food.mutation.js'
 import { useMutation } from '@apollo/client';
 
 
@@ -10,7 +10,7 @@ const mealTimeOptions = ["breakfast", "lunch", "snack", "dinner"];
 const typeOptions = ["rice"];
 
 export default function CreateFoodForm() {
-  const [createFood , {loading}] = useMutation(CREATE_FOOD);
+  const [updateFood , {loading}] = useMutation(UPDATE_FOOD);
   const [formData, setFormData] = useState({
     name: "",
     price: "",
@@ -54,8 +54,7 @@ export default function CreateFoodForm() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log({...formData,price : parseFloat(formData.price)})
-    const data = await createFood({
+    const data = await updateFood({
       variables : {
         input : {
           ...formData,
@@ -69,7 +68,7 @@ export default function CreateFoodForm() {
 
   return (
     <div className="card w-full max-w-lg bg-base-100 shadow-2xl p-8 mx-auto rounded-lg">
-      <h2 className="text-2xl font-bold text-center text-primary mb-4">Create Food Item</h2>
+      <h2 className="text-2xl font-bold text-center text-primary mb-4">Update Food Item</h2>
       <div className="card-body">
         <form onSubmit={handleSubmit} className="space-y-4">
           <input
@@ -163,7 +162,7 @@ export default function CreateFoodForm() {
               </label>
             ))}
           </div>
-          <button className="btn btn-primary w-full p-3 text-lg rounded-lg">Create Food</button>
+          <button className="btn btn-primary w-full p-3 text-lg rounded-lg">{loading ? "createing ...":"Create Food"}</button>
         </form>
       </div>
     </div>

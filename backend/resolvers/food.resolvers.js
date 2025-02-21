@@ -15,7 +15,7 @@ const foodResolver = {
         },
         getAllFood : async () => {
             try {
-                console.log('food')
+                // console.log('food')
                 const foods = await Food.find();
                 if(!foods.length){
                     throw new Error('No food in the menu')
@@ -35,8 +35,8 @@ const foodResolver = {
     },
     Mutation : {
         createFood: async (_, { input }) => {
-            // console.log("✅ createFood resolver called!"); // Check if resolver runs
-            // console.log("Received input:", input); // Log input object
+            console.log("✅ createFood resolver called!"); // Check if resolver runs
+            console.log("Received input:", input); // Log input object
     
             try {
                 const newFood = new Food(input);

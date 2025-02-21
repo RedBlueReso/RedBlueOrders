@@ -6,6 +6,7 @@ import { Home } from './pages/Home';
 import { Login } from './pages/Login';
 import { Signup } from './pages/Signup';
 import { Cart } from './pages/Cart';
+import NotFound from './pages/NotFound.tsx'
 import CreateFood from "./pages/CreateFood.tsx";
 
 function App() {
@@ -20,6 +21,7 @@ function App() {
             <Route path="/signup" element={<Signup />} />
             <Route path="/cart" element={<Cart />} />
             <Route path="/create" element={<CreateFood />} />
+            <Route path="*" element={<NotFound />} />
 
           </Routes>
         </div>
