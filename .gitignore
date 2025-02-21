@@ -1,25 +1,33 @@
-# Logs
-logs
-*.log
+# Ignore environment variables
+.env
+.env.local
+.env.development
+.env.production
+.env.test
+
+# Ignore node_modules in root and frontend folder
+node_modules/
+frontend/node_modules/
+
+# Ignore build outputs
+dist/
+build/
+frontend/dist/
+frontend/build/
+
+# Ignore log files
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
 pnpm-debug.log*
-lerna-debug.log*
 
-node_modules
-dist
-dist-ssr
-*.local
-
-# Editor directories and files
-.vscode/*
-!.vscode/extensions.json
-.idea
+# Ignore IDE and OS-specific files
+.vscode/
+.idea/
 .DS_Store
-*.suo
-*.ntvs*
-*.njsproj
-*.sln
-*.sw?
-.env
+Thumbs.db
+
+# Ignore package manager lock files (optional, depending on your workflow)
+package-lock.json
+yarn.lock
+pnpm-lock.yaml
