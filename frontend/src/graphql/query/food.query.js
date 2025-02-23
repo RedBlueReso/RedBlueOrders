@@ -14,9 +14,9 @@ export const GET_ALL_FOOD = gql`
 `
 
 export const GET_FOOD = gql`
-    query getFood ($input : ID!){
-        getFood(_id: $input){
-            _id
+    query GetFood ($input : ID!){
+        getFood(input: $input){
+            
             name
             price 
             ingredients

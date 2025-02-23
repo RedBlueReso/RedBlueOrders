@@ -22,11 +22,12 @@ function App() {
             <NavBar />
             <Routes>
               <Route path="/" element={<Home />} />
+              <Route path="/update" element={<Home userAdmin = {true}/>} />
               <Route path="/login" element={<Login />} />
               <Route path="/signup" element={<Signup />} />
               <Route path="/cart" element={<Cart />} /> 
               <Route path="/create" element={<CreateFood />} />
-              <Route path="/update" element={<UpdateFood />} />
+              <Route path="/update/:id" element={<UpdateFood />} />
               <Route path="*" element={<NotFound />} />
 
             </Routes>

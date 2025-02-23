@@ -2,18 +2,23 @@ import React , {useEffect, useState} from 'react';
 import { useCart } from '../context/CartContext';
 import { useQuery } from '@apollo/client';
 import {GET_ALL_FOOD} from '../graphql/query/food.query.js'
+import { useNavigate } from 'react-router-dom';
 
-const Home = () => {
+const Home = ({userAdmin = false}) => {
   const { dispatch } = useCart();
   const [foods  , setFoods ] = useState([]);
-
+console.log(userAdmin)
   const { data : food , loading} = useQuery(GET_ALL_FOOD)
 
-  const status = ''
+  const status = '';
+  const navigate = useNavigate()
+  const handleUpdate = (food)=>{
+    navigate(`/update/${food?._id}`)
+  }
 
   
   useEffect(() => {setFoods(food?.getAllFood)},[foods , loading])
-    return (
+    return ( loading ? <div>Loading...</div> :
   
   
     
@@ -24,7 +29,7 @@ const Home = () => {
       
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
         {foods?.map((food) => (
-          <div key={food?._id || ''} className="bg-white rounded-lg shadow-md overflow-hidden">
+          <div key={food?._id || ''} className="bg-white rounded-lg shadow-md overflow-hidden" onClick={ () => handleUpdate(food)}>
             <img
               src={food?.image}
               alt={food?.name}

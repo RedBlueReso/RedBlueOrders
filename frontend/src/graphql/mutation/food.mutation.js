@@ -15,6 +15,7 @@ export const UPDATE_FOOD = gql`
             
             name
             price
+        
         }
     }
 `

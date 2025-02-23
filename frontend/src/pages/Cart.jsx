@@ -4,7 +4,7 @@ import { Trash2 } from 'lucide-react';
 
 const Cart = () => {
   const { state, dispatch } = useCart();
-
+  console.log(state)
   const handleCheckout = () => {
     // Implement Google Pay integration here
     console.log('Proceeding to checkout:', state);
@@ -31,11 +31,11 @@ const Cart = () => {
                     <h3 className="text-lg font-semibold text-gray-900">{item.name}</h3>
                     <p className="text-gray-600 mt-1">Quantity: {item.quantity}</p>
                     <p className="text-gray-900 font-medium mt-1">
-                      ${(item.price * item.quantity).toFixed(2)}
+                    ₹{(item.price * item.quantity).toFixed(2)}
                     </p>
                   </div>
                   <button
-                    onClick={() => dispatch({ type: 'REMOVE_ITEM', payload: item.id })}
+                    onClick={() => dispatch({ type: 'REMOVE_ITEM', payload: item._id })}
                     className="text-red-500 hover:text-red-600 p-2"
                   >
                     <Trash2 className="h-5 w-5" />

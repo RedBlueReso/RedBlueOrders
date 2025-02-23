@@ -51,10 +51,13 @@ const foodResolver = {
         },
         updateFood : async(_,{input}) => {
             try {
-                
+                const food = await Food.findByIdAndUpdate(input._id, input, {new : true});
+                console.log(input._id)
+
+                return food
             } catch (error) {
                 console.log('error in food-resolver-mutation-updatefood : ',error)
-
+                return error
             }
         },
         deleteFood : async(_,{input}) => {

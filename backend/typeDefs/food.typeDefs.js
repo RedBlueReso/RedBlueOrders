@@ -4,11 +4,11 @@ const foodTypeDef = `#graphql
         name : String!
         price : Float!
         ingredients : [String!]
-        size : Boolean
-        type : String
+        size : [String]
+        type : [String]
         category : String
         image : String
-        mealTime : String
+        mealTime : [String]
     }
     type Query {
         getFood(input: ID!): Food
@@ -32,6 +32,7 @@ const foodTypeDef = `#graphql
         mealTime : [String]
     }
     input updateFoodInput {
+        _id : ID!
         name : String
         price : Float
         ingredients : [String!]

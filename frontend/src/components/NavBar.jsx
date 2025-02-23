@@ -5,7 +5,7 @@ import { useCart } from '../context/CartContext';
 
 const NavBar = () => {
   const { state } = useCart();
-  console.log(state)
+  // console.log(state)
 
   return (
     <nav className="bg-white shadow-lg">

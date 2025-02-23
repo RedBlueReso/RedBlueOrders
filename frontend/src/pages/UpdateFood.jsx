@@ -1,6 +1,8 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import {UPDATE_FOOD} from '../graphql/mutation/food.mutation.js'
-import { useMutation } from '@apollo/client';
+import { GET_FOOD } from "../graphql/query/food.query.js";
+import { useMutation , useQuery } from '@apollo/client';
+import {useParams} from 'react-router-dom'
 
 
 
@@ -10,16 +12,24 @@ const mealTimeOptions = ["breakfast", "lunch", "snack", "dinner"];
 const typeOptions = ["rice"];
 
 export default function UpdateFoodForm() {
+  const {id} = useParams()
+  const {data : food , loading : getloading , error} = useQuery(GET_FOOD , {
+    variables: { input: id },
+    skip: !id
+  });
+  // console.log(getloading)
+  console.log(food?.getFood)
+  // console.log(error)
   const [updateFood , {loading}] = useMutation(UPDATE_FOOD);
   const [formData, setFormData] = useState({
-    name: "",
-    price: "",
-    ingredients: [""],
-    size: [],
-    type: [],
-    category: "veg",
-    image: "",
-    mealTime: [],
+    name: food?.getFood?.name || "",
+    price: food?.getFood?.price ||"",
+    ingredients:food?.getFood?.ingredients || [""],
+    size:food?.getFood?.size || [],
+    type: food?.getFood?.type ||[],
+    category:food?.getFood?.category || "veg",
+    image:food?.getFood?.image || "",
+    mealTime:food?.getFood?.mealTime || [],
   });
 
   const handleChange = (e) => {
@@ -58,13 +68,29 @@ export default function UpdateFoodForm() {
       variables : {
         input : {
           ...formData,
-          price : parseFloat(formData.price)
+          price : parseFloat(formData.price),
+          _id : id
         }
       }
     })
 
     console.log("Data:", data );
   };
+
+  useEffect(() => {
+    if(food?.getFood){
+      setFormData({
+        name: food?.getFood?.name || "",
+        price: food?.getFood?.price ||"",
+        ingredients:food?.getFood?.ingredients || [""],
+        size:food?.getFood?.size || [],
+        type: food?.getFood?.type ||[],
+        category:food?.getFood?.category || "veg",
+        image:food?.getFood?.image || "",
+        mealTime:food?.getFood?.mealTime || [],
+      })
+    }
+  },[food])
 
   return (
     <div className="card w-full max-w-lg bg-base-100 shadow-2xl p-8 mx-auto rounded-lg">
@@ -162,7 +188,7 @@ export default function UpdateFoodForm() {
               </label>
             ))}
           </div>
-          <button className="btn btn-primary w-full p-3 text-lg rounded-lg">{loading ? "createing ...":"Create Food"}</button>
+          <button className="btn btn-primary w-full p-3 text-lg rounded-lg">{loading ? "Updating ...":"Update Food"}</button>
         </form>
       </div>
     </div>
