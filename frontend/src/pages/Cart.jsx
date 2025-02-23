@@ -2,7 +2,7 @@ import React from 'react';
 import { useCart } from '../context/CartContext';
 import { Trash2 } from 'lucide-react';
 
-export const Cart = () => {
+const Cart = () => {
   const { state, dispatch } = useCart();
 
   const handleCheckout = () => {
@@ -62,3 +62,5 @@ export const Cart = () => {
     </div>
   );
 };
+
+export default Cart

@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 
-export const Login = () => {
+const Login = () => {
   const [isAdmin, setIsAdmin] = useState(false);
   const [formData, setFormData] = useState(
     isAdmin 
@@ -9,7 +9,7 @@ export const Login = () => {
       : { name: '', phoneNumber: '' }
   );
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = (e) => {
     e.preventDefault();
     // Handle login logic here
     console.log('Login data:', formData);
@@ -98,3 +98,4 @@ export const Login = () => {
     </div>
   );
 };
+export default Login;

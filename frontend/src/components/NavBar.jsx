@@ -3,8 +3,9 @@ import { Link } from 'react-router-dom';
 import { ShoppingCart, User } from 'lucide-react';
 import { useCart } from '../context/CartContext';
 
-export const Navbar = () => {
+const NavBar = () => {
   const { state } = useCart();
+  console.log(state)
 
   return (
     <nav className="bg-white shadow-lg">
@@ -33,3 +34,5 @@ export const Navbar = () => {
     </nav>
   );
 };
+
+export default NavBar;

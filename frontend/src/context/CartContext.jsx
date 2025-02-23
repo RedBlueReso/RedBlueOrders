@@ -1,22 +1,8 @@
 import React, { createContext, useContext, useReducer } from 'react';
-import { CartItem, Food } from '../types';
 
-interface CartState {
-  items: CartItem[];
-  total: number;
-}
+const CartContext = createContext(null);
 
-type CartAction =
-  | { type: 'ADD_ITEM'; payload: Food }
-  | { type: 'REMOVE_ITEM'; payload: string }
-  | { type: 'CLEAR_CART' };
-
-const CartContext = createContext<{
-  state: CartState;
-  dispatch: React.Dispatch<CartAction>;
-} | null>(null);
-
-const cartReducer = (state: CartState, action: CartAction): CartState => {
+const cartReducer = (state, action) => {
   switch (action.type) {
     case 'ADD_ITEM': {
       const existingItem = state.items.find(item => item.id === action.payload.id);
@@ -56,7 +42,7 @@ const cartReducer = (state: CartState, action: CartAction): CartState => {
   }
 };
 
-export const CartProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
+export const CartProvider = ({ children }) => {
   const [state, dispatch] = useReducer(cartReducer, { items: [], total: 0 });
 
   return (

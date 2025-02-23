@@ -3,7 +3,7 @@ import { useCart } from '../context/CartContext';
 import { useQuery } from '@apollo/client';
 import {GET_ALL_FOOD} from '../graphql/query/food.query.js'
 
-export const Home = () => {
+const Home = () => {
   const { dispatch } = useCart();
   const [foods  , setFoods ] = useState([]);
 
@@ -13,7 +13,7 @@ export const Home = () => {
 
   
   useEffect(() => {setFoods(food?.getAllFood)},[foods , loading])
-    return (!food?.getAllFood ? <div>loading...</div> :
+    return (
   
   
     
@@ -50,3 +50,4 @@ export const Home = () => {
     </div>
   );
 }
+export default Home;

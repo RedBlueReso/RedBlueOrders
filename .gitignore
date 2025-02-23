@@ -10,7 +10,7 @@ node_modules/
 frontend/node_modules/
 
 # test
-fronted1
+frontend1
 
 # Ignore build outputs
 dist/

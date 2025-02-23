@@ -1,13 +1,13 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 
-export const Signup = () => {
+const Signup = () => {
   const [formData, setFormData] = useState({
     name: '',
     phoneNumber: '',
   });
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = (e) => {
     e.preventDefault();
     // Handle signup logic here
     console.log('Signup data:', formData);
@@ -54,3 +54,4 @@ export const Signup = () => {
     </div>
   );
 };
+export default Signup;
