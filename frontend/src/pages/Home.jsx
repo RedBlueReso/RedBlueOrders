@@ -29,7 +29,7 @@ console.log(userAdmin)
       
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
         {foods?.map((food) => (
-          <div key={food?._id || ''} className="bg-white rounded-lg shadow-md overflow-hidden" onClick={ () => handleUpdate(food)}>
+          <div key={food?._id || ''} className="bg-white rounded-lg shadow-md overflow-hidden" onClick={ () =>userAdmin && handleUpdate(food)}>
             <img
               src={food?.image}
               alt={food?.name}
