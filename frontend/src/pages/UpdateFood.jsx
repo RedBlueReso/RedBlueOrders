@@ -23,13 +23,13 @@ export default function UpdateFoodForm() {
   // UPDATE
   const [updateFood , {loading : updateLoading , error : errorUpdate}] = useMutation(UPDATE_FOOD , {
     refetchQueries : ['getFood'],
-    onCompleted : () => {toast.success('Food Update Success'), navigate('/update')},
+    onCompleted : () => {toast.success('Food Update Success'), navigate('/admin')},
     onError : (error) => toast.error(error.message),
   });
   // DELETE
   const [deleteFood , {loading : deleteLoading , error : errorDelete}] = useMutation(DELETE_FOOD , {
     
-    onCompleted : () => {toast.success('Food Delete Success'); navigate('/update')},
+    onCompleted : () => {toast.success('Food Delete Success'); navigate('/admin')},
     onError : (error) => toast.error(error.message),
   })
 

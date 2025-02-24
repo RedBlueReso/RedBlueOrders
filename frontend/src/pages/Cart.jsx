@@ -29,6 +29,9 @@ const Cart = () => {
                   />
                   <div className="ml-6 flex-1">
                     <h3 className="text-lg font-semibold text-gray-900">{item.name}</h3>
+                    <p className="text-gray-900 font-medium mt-1">
+                    ₹{(item.price ).toFixed(2)}
+                    </p>
                     <p className="text-gray-600 mt-1">Quantity: {item.quantity}</p>
                     <p className="text-gray-900 font-medium mt-1">
                     ₹{(item.price * item.quantity).toFixed(2)}
@@ -48,7 +51,7 @@ const Cart = () => {
           <div className="mt-8 bg-white rounded-lg shadow-md p-6">
             <div className="flex justify-between text-lg font-semibold text-gray-900 mb-4">
               <span>Total:</span>
-              <span>${state.total.toFixed(2)}</span>
+              <span>₹{state.total.toFixed(2)}</span>
             </div>
             <button
               onClick={handleCheckout}

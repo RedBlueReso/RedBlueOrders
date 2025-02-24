@@ -2,6 +2,7 @@ import {  useState } from "react";
 import {CREATE_FOOD} from '../graphql/mutation/food.mutation.js'
 import toast from "react-hot-toast";
 import { useMutation } from '@apollo/client';
+import { useNavigate } from "react-router-dom";
 
 
 
@@ -13,12 +14,12 @@ const typeOptions = ["rice"];
 
 export default function UpdateFoodForm() {
   
-  
+  const navigate = useNavigate()
  
   const [createFood , {loading , error : errorCreate}] = useMutation(CREATE_FOOD,{
-    refetchQueries : ['getAllFood'],
-    onCompleted : () => toast.success('Food Create Success'),
-    onError : () => toast.error(errorCreate.message),
+    
+    onCompleted : () => {toast.success('Food Create Success'); navigate("/")},
+    onError : (error) => toast.error(error.message),
   });
   const [formData, setFormData] = useState({
     name:  "",

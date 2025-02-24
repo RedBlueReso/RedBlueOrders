@@ -1,6 +1,7 @@
-import { useState } from 'react'
+
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import { CartProvider } from './context/CartContext.jsx';
+
 import {Toaster} from 'react-hot-toast'
 
 // local
@@ -18,23 +19,25 @@ function App() {
   return (
     <>
       <Router>
-        <CartProvider>
-          <div className="min-h-screen bg-gray-100">
-            <NavBar />
-            <Routes>
-              <Route path="/" element={<Home />} />
-              <Route path="/update" element={<Home userAdmin = {true}/>} />
-              <Route path="/login" element={<Login />} />
-              <Route path="/signup" element={<Signup />} />
-              <Route path="/cart" element={<Cart />} /> 
-              <Route path="/create" element={<CreateFood />} />
-              <Route path="/update/:id" element={<UpdateFood />} />
-              <Route path="*" element={<NotFound />} />
+        
+          <CartProvider>
+            <div className="min-h-screen bg-gray-100">
+              <NavBar />
+              <Routes>
+                <Route path="/" element={<Home />} />
+                <Route path="/admin" element={<Home userAdmin = {true}/>} />
+                <Route path="/login" element={<Login />} />
+                <Route path="/signup" element={<Signup />} />
+                <Route path="/cart" element={<Cart />} /> 
+                <Route path="/create" element={<CreateFood />} />
+                <Route path="/update/:id" element={<UpdateFood />} />
+                <Route path="*" element={<NotFound />} />
 
-            </Routes>
-            <Toaster/>
-          </div>
-        </CartProvider>
+              </Routes>
+              <Toaster/>
+            </div>
+          </CartProvider>
+        
       </Router>
 
     </>
