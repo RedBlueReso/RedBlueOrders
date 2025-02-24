@@ -1,8 +1,10 @@
 import { useEffect, useState } from "react";
-import {UPDATE_FOOD} from '../graphql/mutation/food.mutation.js'
+import {UPDATE_FOOD ,DELETE_FOOD} from '../graphql/mutation/food.mutation.js'
 import { GET_FOOD } from "../graphql/query/food.query.js";
 import { useMutation , useQuery } from '@apollo/client';
-import {useParams} from 'react-router-dom'
+import {useNavigate , useParams} from 'react-router-dom'
+import toast from "react-hot-toast";
+
 
 
 
@@ -12,15 +14,26 @@ const mealTimeOptions = ["breakfast", "lunch", "snack", "dinner"];
 const typeOptions = ["rice"];
 
 export default function UpdateFoodForm() {
-  const {id} = useParams()
-  const {data : food , loading : getloading , error} = useQuery(GET_FOOD , {
+  const navigate = useNavigate();
+  const { id } = useParams();
+  const {data : food , loading : getloading , refetch: refetchFood} = useQuery(GET_FOOD , {
     variables: { input: id },
     skip: !id
   });
-  // console.log(getloading)
-  console.log(food?.getFood)
-  // console.log(error)
-  const [updateFood , {loading}] = useMutation(UPDATE_FOOD);
+  // UPDATE
+  const [updateFood , {loading : updateLoading , error : errorUpdate}] = useMutation(UPDATE_FOOD , {
+    refetchQueries : ['getFood'],
+    onCompleted : () => {toast.success('Food Update Success'), navigate('/update')},
+    onError : (error) => toast.error(error.message),
+  });
+  // DELETE
+  const [deleteFood , {loading : deleteLoading , error : errorDelete}] = useMutation(DELETE_FOOD , {
+    
+    onCompleted : () => {toast.success('Food Delete Success'); navigate('/update')},
+    onError : (error) => toast.error(error.message),
+  })
+
+
   const [formData, setFormData] = useState({
     name: food?.getFood?.name || "",
     price: food?.getFood?.price ||"",
@@ -64,7 +77,8 @@ export default function UpdateFoodForm() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    const data = await updateFood({
+
+    await updateFood({
       variables : {
         input : {
           ...formData,
@@ -74,8 +88,19 @@ export default function UpdateFoodForm() {
       }
     })
 
-    console.log("Data:", data );
+    
   };
+
+  const handleDelete = async(e)  => {
+    e.preventDefault();
+   
+    const data = await deleteFood({
+      variables : {
+        input : id
+      }
+    })
+    console.log(data)
+  }
 
   useEffect(() => {
     if(food?.getFood){
@@ -91,43 +116,48 @@ export default function UpdateFoodForm() {
       })
     }
   },[food])
+  useEffect(() => {
+    refetchFood();
+  })
 
   return (
-    <div className="card w-full max-w-lg bg-base-100 shadow-2xl p-8 mx-auto rounded-lg">
+    <div className="w-full max-w-lg bg-white shadow-lg p-6 mx-auto rounded-xl border border-gray-200">
       <h2 className="text-2xl font-bold text-center text-primary mb-4">Update Food Item</h2>
-      <div className="card-body">
-        <form onSubmit={handleSubmit} className="space-y-4">
+      {getloading ? <div>Loading...</div>: <div className="card-body">
+        <form  className="space-y-4">
+        <p className="font-semibold">Name:</p>
+        <input
+          className="w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+          name="name"
+          placeholder="Name"
+          value={formData.name}
+          onChange={handleChange}
+          required
+        />
+        <p className="font-semibold">Price:</p>
           <input
-            className="input input-bordered w-full p-3 rounded-lg"
-            name="name"
-            placeholder="Name"
-            value={formData.name}
-            onChange={handleChange}
-            required
-          />
-          <input
-            className="input input-bordered w-full p-3 rounded-lg"
-            name="price"
-            type="number"
-            placeholder="Price"
-            value={formData.price}
-            onChange={handleChange}
-            required
-          />
+          className="w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+          name="price"
+          
+          placeholder="Price"
+          value={formData.price}
+          onChange={handleChange}
+          required
+        />
           <div>
             <p className="font-semibold">Ingredients:</p>
             {formData.ingredients.map((ingredient, index) => (
               <div key={index} className="flex items-center space-x-2">
                 <input
-                  className="input input-bordered w-full p-3 rounded-lg"
+                  className="w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
                   placeholder="Ingredient"
                   value={ingredient}
                   onChange={(e) => handleIngredientChange(index, e.target.value)}
                 />
-                <button type="button" className="btn btn-error" onClick={() => removeIngredientField(index)}>X</button>
+                <button type="button" className="px-3 py-1 bg-red-500 text-white rounded-md" onClick={() => removeIngredientField(index)}>X</button>
               </div>
             ))}
-            <button type="button" className="btn btn-secondary mt-2" onClick={addIngredientField}>+ Add Ingredient</button>
+            <button type="button" className="mt-3 px-4 py-2 bg-green-500 text-white rounded-md" onClick={addIngredientField}>+ Add Ingredient</button>
           </div>
           <div>
             <p className="font-semibold">Size:</p>
@@ -157,8 +187,9 @@ export default function UpdateFoodForm() {
               </label>
             ))}
           </div>
+          <p className="font-semibold">Category:</p>
           <select
-            className="select select-bordered w-full p-3 rounded-lg"
+            className="w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
             name="category"
             value={formData.category}
             onChange={handleChange}
@@ -167,8 +198,9 @@ export default function UpdateFoodForm() {
               <option key={option} value={option}>{option}</option>
             ))}
           </select>
+          <p className="font-semibold">Image:</p>
           <input
-            className="input input-bordered w-full p-3 rounded-lg"
+            className="w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
             name="image"
             placeholder="Image URL"
             value={formData.image}
@@ -188,9 +220,10 @@ export default function UpdateFoodForm() {
               </label>
             ))}
           </div>
-          <button className="btn btn-primary w-full p-3 text-lg rounded-lg">{loading ? "Updating ...":"Update Food"}</button>
+          <button onClick = {handleSubmit}className="w-full py-3 bg-blue-500 text-white rounded-md text-lg font-semibold hover:bg-blue-600">{updateLoading ? "Updating ...":"Update Food"}</button>
+          <button onClick = {handleDelete} className="w-full py-3 bg-red-500 text-white rounded-md text-lg font-semibold hover:bg-red-600">{deleteLoading ? "Deleting ...":"Delete Food"}</button>
         </form>
-      </div>
+      </div>}
     </div>
   );
 }

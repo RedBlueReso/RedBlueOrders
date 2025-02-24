@@ -10,7 +10,8 @@ const foodResolver = {
                 }
                 return food;
             } catch (error) {
-                console.log('error in food-resolver-foods : ', error);
+                // console.log('error in food-resolver-foods : ', error);
+                throw new Error('Internal server Error')
             }
         },
         getAllFood : async () => {
@@ -22,7 +23,9 @@ const foodResolver = {
                 }
                 return foods;
             } catch (error) {
-                console.log('error in food-resolver-allfoods : ', error);
+                // console.log('error in food-resolver-allfoods : ', error);
+                throw new Error('Internal server Error')
+
             }
         },
         // getfilter : async (_,{input}) => {
@@ -35,10 +38,11 @@ const foodResolver = {
     },
     Mutation : {
         createFood: async (_, { input }) => {
-            console.log("✅ createFood resolver called!"); // Check if resolver runs
-            console.log("Received input:", input); // Log input object
+            // console.log("✅ createFood resolver called!"); // Check if resolver runs
+            // console.log("Received input:", input); // Log input object
     
             try {
+                if(await Food.findOne({ name: input.name })){return new Error('Food Name not Available')}
                 const newFood = new Food(input);
 
                 // console.log("✅ Food successfully saved:", newFood);
@@ -52,21 +56,30 @@ const foodResolver = {
         updateFood : async(_,{input}) => {
             try {
                 const food = await Food.findByIdAndUpdate(input._id, input, {new : true});
-                console.log(input._id)
+                // console.log(input)
 
                 return food
             } catch (error) {
-                console.log('error in food-resolver-mutation-updatefood : ',error)
-                return error
+                // console.log('error in food-resolver-mutation-updatefood : ',error)
+                return new Error("Failed to update Food Item")
             }
         },
-        deleteFood : async(_,{input}) => {
+        deleteFood: async (_, { input }) => {
             try {
-                
+              const food = await Food.findByIdAndDelete(input);
+          
+              if (!food) {
+                throw new Error("Food item not found");
+              }
+          
+              
+              return food;
             } catch (error) {
-                console.log('error in food-resolver-mutation-deletefood : ',error)
+            //   console.error("Error in deleteFood resolver:", error);
+              throw new Error("Failed to delete food");
             }
-        },
+          }
+          
     },
 
 }

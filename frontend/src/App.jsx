@@ -1,6 +1,7 @@
 import { useState } from 'react'
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import { CartProvider } from './context/CartContext.jsx';
+import {Toaster} from 'react-hot-toast'
 
 // local
 import NotFound from './pages/NotFound.jsx';
@@ -31,6 +32,7 @@ function App() {
               <Route path="*" element={<NotFound />} />
 
             </Routes>
+            <Toaster/>
           </div>
         </CartProvider>
       </Router>

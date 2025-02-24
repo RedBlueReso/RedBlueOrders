@@ -7,9 +7,8 @@ import { useNavigate } from 'react-router-dom';
 const Home = ({userAdmin = false}) => {
   const { dispatch } = useCart();
   const [foods  , setFoods ] = useState([]);
-console.log(userAdmin)
-  const { data : food , loading} = useQuery(GET_ALL_FOOD)
-
+  const { data : food , loading , refetch : refetchAllFood} = useQuery(GET_ALL_FOOD)
+  
   const status = '';
   const navigate = useNavigate()
   const handleUpdate = (food)=>{
@@ -18,6 +17,7 @@ console.log(userAdmin)
 
   
   useEffect(() => {setFoods(food?.getAllFood)},[foods , loading])
+  useEffect(() => {refetchAllFood()},[])
     return ( loading ? <div>Loading...</div> :
   
   

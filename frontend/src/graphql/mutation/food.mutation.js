@@ -20,11 +20,11 @@ export const UPDATE_FOOD = gql`
     }
 `
 export const DELETE_FOOD = gql`
-mutation deleteFood($input : ID!) {
-    deleteFood(input: $input) {
-        
-        name
-        price
+    mutation deleteFood($input : ID!) {
+        deleteFood(input: $input) {
+            
+            name
+            price
+        }
     }
-}
 `
