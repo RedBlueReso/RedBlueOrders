@@ -10,7 +10,8 @@ import { useNavigate } from "react-router-dom";
 const sizeOptions = ["small", "medium", "large", "extra large"];
 const categoryOptions = ["veg", "nonveg"];
 const mealTimeOptions = ["breakfast", "lunch", "snack", "dinner"];
-const typeOptions = ["rice"];
+const typeOptions = ["Rice","Milkshake","Chinese","Fresh Juice","Fast Food","Ice-cream","Combos","Fries","Gravy","Mojitos","tiffen"];
+
 
 export default function UpdateFoodForm() {
   
@@ -18,7 +19,7 @@ export default function UpdateFoodForm() {
  
   const [createFood , {loading , error : errorCreate}] = useMutation(CREATE_FOOD,{
     
-    onCompleted : () => {toast.success('Food Create Success'); navigate("/")},
+    onCompleted : () => {toast.success('Food Create Success'); navigate("/admin")},
     onError : (error) => toast.error(error.message),
   });
   const [formData, setFormData] = useState({
@@ -109,7 +110,7 @@ export default function UpdateFoodForm() {
           <input
           className="w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
           name="price"
-          type="number"
+        
           placeholder="Price"
           value={formData.price}
           onChange={handleChange}

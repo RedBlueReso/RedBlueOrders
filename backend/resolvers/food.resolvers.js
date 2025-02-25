@@ -28,13 +28,30 @@ const foodResolver = {
 
             }
         },
-        // getfilter : async (_,{input}) => {
-        //     try {
-        //         const giveBack = await Food.find({input}).distinct();
-        //     } catch (error) {
-        //         console.log('error in food-resolver-getback : ', error);
-        //     }
-        // },
+        getFilter : async (_,{input}) => {
+            try {
+                const category = await Food.distinct("category");
+                const type = await Food.distinct("type");
+                const mealTime = await Food.distinct("mealTime");
+            
+                console.log("Distinct Categories:", category);
+                console.log("Distinct Types:", type);
+                console.log("Distinct Meal Times:", mealTime);
+            
+                return {
+                  category,
+                  type,
+                  mealTime,
+                };
+              } catch (error) {
+                console.error("Error fetching distinct values:", error);
+                return {
+                  category: [],
+                  type: [],
+                  mealTime: [],
+                };
+              }
+        },
     },
     Mutation : {
         createFood: async (_, { input }) => {

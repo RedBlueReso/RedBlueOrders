@@ -1,17 +1,21 @@
 import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate, useParams } from 'react-router-dom';
 
 const Login = () => {
-  const [isAdmin, setIsAdmin] = useState(false);
+  const {tn} = useParams();
+  console.log(tn)
+  const isAdmin = tn==='admin'?true:false
   const [formData, setFormData] = useState(
     isAdmin 
       ? { email: '', password: '' }
       : { name: '', phoneNumber: '' }
   );
+  const navigate = useNavigate();
 
   const handleSubmit = (e) => {
     e.preventDefault();
     // Handle login logic here
+    navigate('/')
     console.log('Login data:', formData);
   };
 
@@ -19,23 +23,10 @@ const Login = () => {
     <div className="min-h-screen bg-gray-100 flex items-center justify-center">
       <div className="bg-white p-8 rounded-lg shadow-md w-full max-w-md">
         <h2 className="text-2xl font-bold text-center mb-6">
-          {isAdmin ? 'Admin Login' : 'Customer Login'}
+          LOGIN
         </h2>
         
-        <div className="mb-4 flex justify-center space-x-4">
-          <button
-            className={`px-4 py-2 rounded ${!isAdmin ? 'bg-blue-500 text-white' : 'bg-gray-200'}`}
-            onClick={() => setIsAdmin(false)}
-          >
-            Customer
-          </button>
-          <button
-            className={`px-4 py-2 rounded ${isAdmin ? 'bg-blue-500 text-white' : 'bg-gray-200'}`}
-            onClick={() => setIsAdmin(true)}
-          >
-            Admin
-          </button>
-        </div>
+        
 
         <form onSubmit={handleSubmit} className="space-y-4">
           {isAdmin ? (

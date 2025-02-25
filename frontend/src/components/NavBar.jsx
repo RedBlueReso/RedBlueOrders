@@ -25,7 +25,7 @@ const NavBar = () => {
                 </span>
               )}
             </Link>
-            <Link to="/login">
+            <Link to="/login/0">
               <User className="h-6 w-6 text-gray-600" />
             </Link>
           </div>

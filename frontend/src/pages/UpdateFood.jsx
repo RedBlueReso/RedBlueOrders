@@ -11,7 +11,7 @@ import toast from "react-hot-toast";
 const sizeOptions = ["small", "medium", "large", "extra large"];
 const categoryOptions = ["veg", "nonveg"];
 const mealTimeOptions = ["breakfast", "lunch", "snack", "dinner"];
-const typeOptions = ["rice"];
+const typeOptions = ["Rice","Milkshake","Chinese","Fresh Juice","Fast Food","Ice-cream","Combos","Fries","Gravy","Mojitos","Tiffen"];
 
 export default function UpdateFoodForm() {
   const navigate = useNavigate();

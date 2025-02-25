@@ -10,10 +10,15 @@ const foodTypeDef = `#graphql
         image : String
         mealTime : [String]
     }
+    type giveFilter {
+        type : [String]
+        category : [String]
+        mealTime : [String]
+    }
     type Query {
         getFood(input: ID!): Food
         getAllFood : [Food]
-        getBack(input : String!) : [String]
+        getFilter : giveFilter
         
     }
     type Mutation {
