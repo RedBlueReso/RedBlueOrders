@@ -9,6 +9,7 @@ export const GET_ALL_FOOD = gql`
             ingredients
             image
             category
+            type
         }
     }
 `
