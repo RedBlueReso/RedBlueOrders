@@ -5,7 +5,8 @@ import {GraphQLLocalStrategy} from 'graphql-passport'
 import bcrypt from 'bcryptjs'
 
 // local import
-import  User  from "../models/user.model.js";
+// import  User  from "../models/user.model.js";
+import Customer from "../models/customer.model.js";
 
 // EXECUTION
 export const configurePassport = async()=> {
@@ -22,7 +23,7 @@ export const configurePassport = async()=> {
 
     passport.deserializeUser(async(id , done) => {
         try {
-            const user = await UserActivation.findById(id)
+            const user = await Customer.findById(id)
             done(null , user)
         } catch (error) {
             console.log('Error in passport.config.js-configurePasport-deserializeUser : ',error)
@@ -34,7 +35,7 @@ export const configurePassport = async()=> {
         new GraphQLLocalStrategy( async(shopName , password , done) => {
             try {
                 // User validaton
-                const user = await User.findOne({ shopName });
+                const user = await Customer.findOne({ shopName });
                 if (!user) {
                     throw new Error('No User Found')
                 }

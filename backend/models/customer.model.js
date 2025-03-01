@@ -1,22 +1,22 @@
 import mongoose from "mongoose";
 
 const CustomerSchema = mongoose.Schema({
-    username : String,
-    phoneNumber : Number,
+    username :{
+        type:String,
+        required:true
+    } ,
+    phoneNumber :{
+        type:String,
+        required:true
+    },
     orders : [{
-        food : {
-            type : mongoose.Schema.Types.ObjectId,
-            ref : 'food',
-            default : [],
-            
-        },
-        addons : [{
-            type : String,
-            default : []
-    }]}],
+        type : mongoose.Schema.Types.ObjectId,
+        ref : 'order',
+        default : []
+    }],
     tableNumber : {
-        type : Number,
-        default : 0
+        type : String,
+        default : '0'
     }
 });
 

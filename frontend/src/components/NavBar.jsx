@@ -1,10 +1,8 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { ShoppingCart, User } from 'lucide-react';
-import { useCart } from '../context/CartContext';
 
 const NavBar = () => {
-  const { state } = useCart();
   // console.log(state)
 
   return (
@@ -19,11 +17,11 @@ const NavBar = () => {
           <div className="flex items-center space-x-4">
             <Link to="/cart" className="relative">
               <ShoppingCart className="h-6 w-6 text-gray-600" />
-              {state.items.length > 0 && (
+              {/* {state.items.length > 0 && (
                 <span className="absolute -top-2 -right-2 bg-red-500 text-white rounded-full w-5 h-5 flex items-center justify-center text-xs">
                   {state.items.length}
                 </span>
-              )}
+              )} */}
             </Link>
             <Link to="/login/0">
               <User className="h-6 w-6 text-gray-600" />
