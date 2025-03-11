@@ -1,15 +1,17 @@
-import React from 'react';
+import React, { useState } from 'react';
 import toast from 'react-hot-toast';
 import { useQuery, useMutation } from '@apollo/client';
 import { THEIR_ORDERS } from '../graphql/query/order.query';
 import { LOGOUT_CUSTOMER } from '../graphql/mutation/customer.mutation';
+import QRPage from '../components/QRPage';
 
 const Cart = () => {
   const { data, loading, error } = useQuery(THEIR_ORDERS);
-  const [logout] = useMutation(LOGOUT_CUSTOMER,{
+  const [logout] = useMutation(LOGOUT_CUSTOMER, {
     refetchQueries: ['authCustomer'],
   });
-  // console.log(error);
+  const [showQRPage, setShowQRPage] = useState(false);
+
   if (loading) return <p>Loading...</p>;
   if (error) return <p>Error: {error.message}</p>;
 
@@ -37,13 +39,16 @@ const Cart = () => {
   const mergedOrders = mergeOrders(orders);
 
   const handleCheckout = async () => {
+    // Display the QR code page
+    setShowQRPage(true);
+
     // Implement Google Pay integration here
-    try {
-      const { data: logoutData } = await logout();
-      console.log('Logout message:', logoutData.logout.message);
-    } catch (error) {
-      console.error('Error during logout:', error);
-    }
+    // try {
+    //   const { data: logoutData } = await logout();
+    //   console.log('Logout message:', logoutData.logout.message);
+    // } catch (error) {
+    //   console.error('Error during logout:', error);
+    // }
   };
 
   return (
@@ -92,13 +97,8 @@ const Cart = () => {
           </div>
         </>
       )}
-            <button
-              onClick={handleCheckout}
-              className="w-full bg-blue-500 text-white py-3 px-4 rounded-md hover:bg-blue-600 transition-colors"
-            >
-              Proceed to Checkout
-            </button>
-    
+
+      {showQRPage && <QRPage onClose={() => setShowQRPage(false)} />}
     </div>
   );
 };
